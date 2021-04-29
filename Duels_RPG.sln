@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Duels_RPG", "Duels_RPG.csproj", "{FAC8EA22-E00B-4D27-AAB9-B63117552E89}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAC8EA22-E00B-4D27-AAB9-B63117552E89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAC8EA22-E00B-4D27-AAB9-B63117552E89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAC8EA22-E00B-4D27-AAB9-B63117552E89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAC8EA22-E00B-4D27-AAB9-B63117552E89}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7290D359-AB27-40D6-A8B5-AD06939799ED}
+	EndGlobalSection
+EndGlobal
