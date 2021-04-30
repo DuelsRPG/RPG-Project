@@ -91,7 +91,7 @@ namespace Gladiators
             chooseCharaster();
 
             Enemy enemy = new Enemy();
-            enemy.getHealth() = 75;
+            enemy.getHealth(75);
             enemy.Damage = 10;
             enemy.Armor = 3;
             enemy.Dodge = 10;
