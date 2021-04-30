@@ -76,6 +76,7 @@ namespace Gladiators
         public Player() { }
 
     }
+    // Надо удалить weponRatio
     class ClassOfCharaster
     {
         private double damage;

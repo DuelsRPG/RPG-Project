@@ -89,6 +89,12 @@ namespace Gladiators
             player.initEquipment(equipmentsList[Convert.ToInt32(Console.ReadLine()) - 1]);
         }
 
+        //Функция в которой происходит бой
+        void Fight()
+        {
+
+        }
+
 
         /*
 
