@@ -76,30 +76,26 @@ namespace Gladiators
         public Player() { }
 
     }
-    // Надо удалить weponRatio
+    
     class ClassOfCharaster
     {
         private double damage;
         private double health;
-        private double weponRatio;
         private string name;
 
-        public ClassOfCharaster(string name, double health, double damage, double ratio)
+        public ClassOfCharaster(string name, double health, double damage)
         {
             this.name = name;
             this.health = health;
             this.damage = damage;
-            this.weponRatio = ratio;
         }
 
         public void setDamage(double a) { damage = a; }
         public void setHealth (double a) { health = a; }
-        public void setWeponRatio(double a) { weponRatio = a; }
         public void setName(string a) { name = a; }
 
         public double getDamage() { return damage; }
         public double getHealth() { return health; }
-        public double getWeponRatio() { return weponRatio; }
         public string getName() { return name; }
     }
 

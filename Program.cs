@@ -38,21 +38,24 @@ namespace Gladiators
 
             classOfCharastersList = new List<ClassOfCharaster>()
             {
-                new ClassOfCharaster("Воин".PadRight(10),60,20,0.75),
-                new ClassOfCharaster("Разбойник".PadRight(10),80,10,0),
-                new ClassOfCharaster("Танк".PadRight(10),100,7,1.25)
+                //(Наименование класса, отступ, здоровье, урон )
+                new ClassOfCharaster("Воин".PadRight(10),60,20),
+                new ClassOfCharaster("Разбойник".PadRight(10),80,10),
+                new ClassOfCharaster("Танк".PadRight(10),100,7)
             };
             weponsList = new List<Wepon>()
             {
+                //(Наименование, отступ, урон, принадлежность к классу)
                 new Wepon("Секира войны".PadRight(17),5,classOfCharastersList[0]),
                 new Wepon("Клинок ярости".PadRight(17),8,classOfCharastersList[1]),
                 new Wepon("Молот света".PadRight(17),3,classOfCharastersList[2])
             };
             equipmentsList = new List<Equipment>()
             {
+                //(Наименование, отступ, здоровье, броня, уклонение, принадлежность к классу)
                 new Equipment("Демоническая броня".PadRight(20), 20, 2,0, classOfCharastersList[0]),
                 new Equipment("Плащ ночи".PadRight(20),10, 0, 5 , classOfCharastersList[1]),
-                new Equipment("Демоническая броня".PadRight(20), 30, 7,0,classOfCharastersList[2])
+                new Equipment("Броня света".PadRight(20), 30, 7,0,classOfCharastersList[2])
             };
         }
 
@@ -71,7 +74,7 @@ namespace Gladiators
             player.initClassOfChataster(classOfCharastersList[Convert.ToInt32(Console.ReadLine()) - 1]);
 
             num = 1;
-            Console.WriteLine("Выберите оружие: ");
+            Console.WriteLine("Выберите начальное оружие: ");
             foreach (Wepon wepon in weponsList)
             {
                 Console.WriteLine($"{num})\t{wepon.getName()} -\tDMG = {wepon.getDamage()};\t CLASS = {wepon.getClassOfCharaster().getName()}.");
@@ -80,7 +83,7 @@ namespace Gladiators
             player.initWepon(weponsList[Convert.ToInt32(Console.ReadLine()) - 1]);
 
             num = 1;
-            Console.WriteLine("Выберите доспех: ");
+            Console.WriteLine("Выберите начальный доспех: ");
             foreach (Equipment equipment in equipmentsList)
             {
                 Console.WriteLine($"{num})\t{equipment.getName()} -\tHP = {equipment.getHealth()};\t ARMOR = {equipment.getArmor()};\tDODGE = { equipment.getDodge()}%\t CLASS = {equipment.getClassOfCharaster().getName()}.");
@@ -94,7 +97,11 @@ namespace Gladiators
         {
 
         }
+        //Функция магазина
+        void Shop()
+        {
 
+        }
 
         /*
 
