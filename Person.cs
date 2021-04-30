@@ -12,37 +12,14 @@ namespace Gladiators
         protected double health;
         protected double armor;
         protected string name;
-        protected string typeClassOfCharaster;
-        protected int index;
         protected int blockProcent;
 
-        public Specifications() { }
-        public Specifications(double damage, double dodge, double health, double armor, string name, string typeClassOfCharaster, int index, int blockProcent)
-        {
-            this.damage = damage;
-            this.dodge = dodge;
-            this.health = health;
-            this.armor = armor;
-            this.name = name;
-            this.typeClassOfCharaster = typeClassOfCharaster;
-            this.index = index;
-            this.blockProcent = blockProcent;
-        }
-        public Specifications(double damage, double health, double armor, int blockProcent)
-        {
-            this.damage = damage;
-            this.health = health;
-            this.armor = armor;
-            this.blockProcent = blockProcent;
-        }
         //Геттеры
         public double getDamage() { return damage; }
         public double getDodge() { return dodge; }
         public double getHealth() { return health; }
         public double getArmor() { return armor; }
         public string getName() { return name; }
-        public string getTypeClassOfCharaster() { return typeClassOfCharaster; }
-        public int getIndex() { return index; }
         public int getBlockProcent() { return blockProcent; }
 
         //Сеттеры
@@ -51,8 +28,6 @@ namespace Gladiators
         public void setHealth(double a) { health = a; }
         public void setArmor(double a) { armor = a; }
         public void setName(string a) { name = a; }
-        public void setTypeClassOfCharaster(string a) { typeClassOfCharaster = a; }
-        public void setIndex(int a) { index = a; }
         public void setBlockProcent(int a) { blockProcent = a; }
 
         //Что может наш класс
@@ -68,30 +43,127 @@ namespace Gladiators
         }
     }
 
-    class Enemy : Specifications
+    class Player : Specifications
     {
+        private Wepon               mainWepon;
+        private Equipment           mainEquipment;
+        private ClassOfCharaster    mainClass;
+
+        public string className;
+
+        public void initWepon(Wepon a) 
+        { 
+            mainWepon = a;
+            //считаем дать ли баф или дебаф
+            // сделать так же проверку на схожесть с дружественным классом
+            damage += a.getDamage() * ((a.getClassOfCharaster() == mainClass) ? 1.5 : 0.5);
+        }
+        public void initEquipment(Equipment a) { 
+            mainEquipment = a;
+            //считаем дать ли баф или дебаф
+            // сделать так же проверку на схожесть с дружественным классом
+            health += a.getHealth() * ((a.getClassOfCharaster() == mainClass) ? 1.5 : 0.5);
+            armor += a.getArmor() * ((a.getClassOfCharaster() == mainClass) ? 1.5 : 0.5);
+            armor += a.getDodge() * ((a.getClassOfCharaster() == mainClass) ? 1.5 : 0.5);
+        }
+        public void initClassOfChataster(ClassOfCharaster a) { 
+            mainClass = a;
+
+            damage    = a.getDamage();
+            health    = a.getHealth();
+            className = a.getName();
+        }
+        public Player() { }
 
     }
-    class User : Specifications
+    class ClassOfCharaster
     {
-        public User(double damage, double health, double armor, int blockProcent)
+        private double damage;
+        private double health;
+        private double weponRatio;
+        private string name;
+
+        public ClassOfCharaster(string name, double health, double damage, double ratio)
         {
+            this.name = name;
+            this.health = health;
             this.damage = damage;
+            this.weponRatio = ratio;
+        }
+
+        public void setDamage(double a) { damage = a; }
+        public void setHealth (double a) { health = a; }
+        public void setWeponRatio(double a) { weponRatio = a; }
+        public void setName(string a) { name = a; }
+
+        public double getDamage() { return damage; }
+        public double getHealth() { return health; }
+        public double getWeponRatio() { return weponRatio; }
+        public string getName() { return name; }
+    }
+
+    class Wepon
+    {
+        private double damage;
+        private string name;
+        private ClassOfCharaster classOfCharaster;
+
+        public Wepon(string name, double damage, ClassOfCharaster classOfCharaster)
+        {
+            this.name = name;
+            this.damage = damage;
+            this.classOfCharaster = classOfCharaster;
+        }
+
+        public void setDamage(double a) { damage = a; }
+        public void setName(string a) { name = a; }
+        public void setClassOfCharaster(ClassOfCharaster a) { classOfCharaster = a; }
+
+        public double getDamage() { return damage; }
+        public string getName() { return name; }
+        public ClassOfCharaster getClassOfCharaster() { return classOfCharaster; }
+
+    }
+    class Equipment
+    {
+        private ClassOfCharaster classOfCharaster;
+        private double health;
+        private double armor;
+        private double dodge;
+        private string name;
+
+        public Equipment(string name, double health, double armor, double dodge, ClassOfCharaster classOfCharaster)
+        {
+            this.name = name;
             this.health = health;
             this.armor = armor;
-            this.blockProcent = blockProcent;
+            this.dodge = dodge;
+            this.classOfCharaster = classOfCharaster;
         }
+
+        public void setHealth(double a) { health = a; }
+        public void setArmor(double a) { armor = a; }
+        public void setDodge(double a) { dodge = a; }
+        public void setName(string a) { name = a; }
+        public void setClassOfCharaster(ClassOfCharaster a) { classOfCharaster = a; }
+
+        public double getHealth() { return health; }
+        public double getArmor() { return armor; }
+        public double getDodge() { return dodge; }
+        public string getName() { return name; }
+        public ClassOfCharaster getClassOfCharaster() { return classOfCharaster; }
+
     }
 
+    //Это будет удалено
     class Warrior : Specifications
     {
-        public static double WarHealth(double a)
+        public double WarHealth(double a)
         {
             double WarriorHP = a * 1.2;
             return WarriorHP;
         }
     }
-
     class Rouge : Specifications
     {
         public static double RogHealth(double b)
@@ -108,21 +180,6 @@ namespace Gladiators
             return TankArm;
         }
     }
-    class Wepon
-    {
-        public string Name { get; set; }
-        public double Damage { get; set; }
-        public string Class { get; set; }
-        public int Index { get; set; }
-    }
 
-    class Equipment
-    {
-        public string Name { get; set; }
-        public int Health { get; set; }
-        public double Arrmor { get; set; }
-        public string Class { get; set; }
-        public int Dodge { get; set; }
-        public int Index { get; set; }
-    }
+
 }
