@@ -50,6 +50,10 @@ namespace Gladiators
         private ClassOfCharaster    mainClass;
 
         public string className;
+        public double health;
+        public double damage;
+        public double armor;
+        public double dodge;
 
         public void initWepon(Wepon a) 
         { 
@@ -64,7 +68,7 @@ namespace Gladiators
             // сделать так же проверку на схожесть с дружественным классом
             health += a.getHealth() * ((a.getClassOfCharaster() == mainClass) ? 1.5 : 0.5);
             armor += a.getArmor() * ((a.getClassOfCharaster() == mainClass) ? 1.5 : 0.5);
-            armor += a.getDodge() * ((a.getClassOfCharaster() == mainClass) ? 1.5 : 0.5);
+            dodge += a.getDodge() * ((a.getClassOfCharaster() == mainClass) ? 1.5 : 0.5);
         }
         public void initClassOfChataster(ClassOfCharaster a) { 
             mainClass = a;

@@ -6,8 +6,9 @@ namespace Gladiators
 {
     class Program
     {
+        public int playerClass = 0;
 
-        List<ClassOfCharaster>  classOfCharastersList;  //Список классов для персонажа
+        List <ClassOfCharaster>  classOfCharastersList;  //Список классов для персонажа
         List<Wepon>             weponsList;             //Список оружия  для персонажа
         List<Equipment>         equipmentsList;         //Список брони   для персонажа
 
@@ -26,7 +27,8 @@ namespace Gladiators
             //Выбор персонажа
             chooseCharaster();
 
-
+            //Показ характеристик игрока
+            ShowPlayerSpecifications();
 
         }
 
@@ -71,7 +73,8 @@ namespace Gladiators
                 Console.WriteLine($"{num})\t{classOfCharaster.getName()}-\tHP = {classOfCharaster.getHealth()};\tDMG = {classOfCharaster.getDamage()}.");
                 num++;
             }
-            player.initClassOfChataster(classOfCharastersList[Convert.ToInt32(Console.ReadLine()) - 1]);
+            playerClass = Convert.ToInt32(Console.ReadLine());
+            player.initClassOfChataster(classOfCharastersList[playerClass - 1]);
 
             num = 1;
             Console.WriteLine("Выберите начальное оружие: ");
@@ -92,6 +95,12 @@ namespace Gladiators
             player.initEquipment(equipmentsList[Convert.ToInt32(Console.ReadLine()) - 1]);
         }
 
+        //Функция выводит на экран характеристики игрока
+        void ShowPlayerSpecifications()
+        {
+            Console.Clear();
+            Console.WriteLine($"Вы - {player.className} у вас: \n\t  {player.damage} DMG  \n\t {player.health} HP \n\t {player.armor} Брони \n\t {player.dodge}% уклониться");
+        }
         //Функция в которой происходит бой
         void Fight()
         {
