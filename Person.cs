@@ -13,6 +13,7 @@ namespace Gladiators
         protected double armor;
         protected string name;
         protected int blockProcent;
+        protected int blockPenetration;
 
         //Геттеры
         public double getDamage() { return damage; }
@@ -21,6 +22,7 @@ namespace Gladiators
         public double getArmor() { return armor; }
         public string getName() { return name; }
         public int getBlockProcent() { return blockProcent; }
+        public int getBlockPenetration() { return blockPenetration; }
 
         //Сеттеры
         public void setDamage(double a) { damage = Math.Abs(a); }
@@ -29,17 +31,31 @@ namespace Gladiators
         public void setArmor(double a) { armor = a; }
         public void setName(string a) { name = a; }
         public void setBlockProcent(int a) { blockProcent = a; }
+        public void setBlockPenetration(int a) { blockPenetration = a; }
 
         //Что может наш класс
         public double kick(Specifications enemy)
         {
-            if (!block()) { enemy.health -= damage; return damage; } else return 0;
+            if (!block() || chanceBlockPenetration() || chanceDodge()) { enemy.health -= damage; return damage; } else return 0;
         }
         public bool block()
         {
             Random r = new Random();
             int nowProcent = r.Next(1, 101);
             return (blockProcent > nowProcent) ? true : false;
+        }
+
+        public bool chanceDodge()
+        {
+            Random d = new Random();
+            int nowDodgeProcent = d.Next(1, 101);
+            return (dodge > nowDodgeProcent) ? true : false;
+        }
+        public bool chanceBlockPenetration()
+        {
+            Random cbp = new Random();
+            int nowDodgePenetration = cbp.Next(1,101);
+            return (blockPenetration > nowDodgePenetration) ? true : false;
         }
     }
 
@@ -54,6 +70,8 @@ namespace Gladiators
         public double damage;
         public double armor;
         public double dodge;
+        public int blockProcent;
+        public int blockPenetration;
 
         public void initWepon(Wepon a) 
         { 
@@ -64,11 +82,12 @@ namespace Gladiators
         }
         public void initEquipment(Equipment a) { 
             mainEquipment = a;
+            
             //считаем дать ли баф или дебаф
             // сделать так же проверку на схожесть с дружественным классом
             health += a.getHealth() * ((a.getClassOfCharaster() == mainClass) ? 1.5 : 0.5);
             armor += a.getArmor() * ((a.getClassOfCharaster() == mainClass) ? 1.5 : 0.5);
-            dodge += a.getDodge() * ((a.getClassOfCharaster() == mainClass) ? 1.5 : 0.5);
+            dodge = (1-(1-(mainClass.getDodge())/100)*(1-(a.getDodge() * ((a.getClassOfCharaster() == mainClass) ? 1.5 : 0.5))/100))*100;
         }
         public void initClassOfChataster(ClassOfCharaster a) { 
             mainClass = a;
@@ -76,8 +95,15 @@ namespace Gladiators
             damage    = a.getDamage();
             health    = a.getHealth();
             className = a.getName();
-        }
+            dodge = a.getDodge();
+           blockProcent = a.getBlockProcent();
+    }
         public Player() { }
+
+        public Player(double health, double damage, double armor, double dodge, int blockProcent, int blockPenetration)
+        {
+
+        }
 
     }
     
@@ -85,22 +111,35 @@ namespace Gladiators
     {
         private double damage;
         private double health;
+        private double dodge;
         private string name;
+        public int blockProcent;
+        public int blockPenetration;
 
-        public ClassOfCharaster(string name, double health, double damage)
+        public ClassOfCharaster(string name, double health, double damage, double dodge, int blockProcent, int blockPenetration)
         {
             this.name = name;
             this.health = health;
             this.damage = damage;
+            this.dodge = dodge;
+            this.blockProcent = blockProcent;
+            this.blockPenetration = blockPenetration;
         }
 
         public void setDamage(double a) { damage = a; }
         public void setHealth (double a) { health = a; }
+        public void setDodge(double a) { dodge = a; }
         public void setName(string a) { name = a; }
+        public void setBlockProcent(int a) { blockProcent = a; }
+        public void setBlockPenetration(int a) { blockPenetration = a; }
+
 
         public double getDamage() { return damage; }
         public double getHealth() { return health; }
+        public double getDodge() { return dodge; }
         public string getName() { return name; }
+        public int getBlockProcent() { return blockProcent; }
+        public int getBlockPenetration() { return blockPenetration; }
     }
 
     class Wepon
@@ -156,8 +195,8 @@ namespace Gladiators
 
     }
 
-    //Это будет удалено
-    class Warrior : Specifications
+    //Это будет переделано
+    /*class Warrior : Specifications
     {
         public double WarHealth(double a)
         {
@@ -180,7 +219,7 @@ namespace Gladiators
             double TankArm = a * 1.5;
             return TankArm;
         }
-    }
+    }*/
 
 
 }

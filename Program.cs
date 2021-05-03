@@ -6,13 +6,12 @@ namespace Gladiators
 {
     class Program
     {
-        public int playerClass = 0;
-
         List <ClassOfCharaster>  classOfCharastersList;  //Список классов для персонажа
         List<Wepon>             weponsList;             //Список оружия  для персонажа
         List<Equipment>         equipmentsList;         //Список брони   для персонажа
 
         Player player;
+        Player enemy1;
         public static void Main(string[] args)
         {
             Program game = new Program();
@@ -37,13 +36,15 @@ namespace Gladiators
         void initGame()
         {
             player = new Player();
+            enemy1 = new Player(50, 15, 2, 5, 20, 15);
+            
 
             classOfCharastersList = new List<ClassOfCharaster>()
             {
-                //(Наименование класса, отступ, здоровье, урон )
-                new ClassOfCharaster("Воин".PadRight(10),60,20),
-                new ClassOfCharaster("Разбойник".PadRight(10),80,10),
-                new ClassOfCharaster("Танк".PadRight(10),100,7)
+                //(Наименование класса, отступ, здоровье, урон, уклонение, шанс заблокировать)
+                new ClassOfCharaster("Воин".PadRight(10),60,20, 10, 20, 10),
+                new ClassOfCharaster("Разбойник".PadRight(10),80,10, 15, 10, 15),
+                new ClassOfCharaster("Танк".PadRight(10),100,7, 0, 35, 25)
             };
             weponsList = new List<Wepon>()
             {
@@ -59,6 +60,8 @@ namespace Gladiators
                 new Equipment("Плащ ночи".PadRight(20),10, 0, 5 , classOfCharastersList[1]),
                 new Equipment("Броня света".PadRight(20), 30, 7,0,classOfCharastersList[2])
             };
+
+            
         }
 
         //В этой функции мы к классу Player даём Оружие, Снаряжение и Класс
@@ -73,8 +76,7 @@ namespace Gladiators
                 Console.WriteLine($"{num})\t{classOfCharaster.getName()}-\tHP = {classOfCharaster.getHealth()};\tDMG = {classOfCharaster.getDamage()}.");
                 num++;
             }
-            playerClass = Convert.ToInt32(Console.ReadLine());
-            player.initClassOfChataster(classOfCharastersList[playerClass - 1]);
+            player.initClassOfChataster(classOfCharastersList[Convert.ToInt32(Console.ReadLine()) - 1]);
 
             num = 1;
             Console.WriteLine("Выберите начальное оружие: ");
@@ -104,6 +106,7 @@ namespace Gladiators
         //Функция в которой происходит бой
         void Fight()
         {
+            Console.WriteLine("БОЙ НАЧИНАЕТСЯ!!!");
 
         }
         //Функция магазина
