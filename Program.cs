@@ -27,8 +27,14 @@ namespace Gladiators
             chooseCharaster();
 
             //Показ характеристик игрока
-            ShowPlayerSpecifications();
+            printStatus();
 
+            while (player.live())
+            {
+                Console.Clear();
+                menu();
+            }
+            
         }
 
         //В этой функции мы инициализируем все переменные, которые нам понадобятся
@@ -98,23 +104,31 @@ namespace Gladiators
         }
 
         //Функция выводит на экран характеристики игрока
-        void ShowPlayerSpecifications()
+        void printStatus()
         {
             Console.Clear();
-            Console.WriteLine($"Вы - {player.className} у вас: \n\t  {player.damage} DMG  \n\t {player.health} HP \n\t {player.armor} Брони \n\t {player.dodge}% уклониться");
+            Console.WriteLine(player.getSpecification());
         }
         //Функция в которой происходит бой
-        void Fight()
+        void fight()
         {
             Console.WriteLine("БОЙ НАЧИНАЕТСЯ!!!");
 
         }
         //Функция магазина
-        void Shop()
+        void shop()
         {
 
         }
 
+        void heal()
+        {
+
+        }
+        void menu()
+        {
+
+        }
         /*
 
 

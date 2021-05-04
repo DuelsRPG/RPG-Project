@@ -72,6 +72,7 @@ namespace Gladiators
         public double dodge;
         public int blockProcent;
         public int blockPenetration;
+        
 
         public void initWepon(Wepon a) 
         { 
@@ -103,6 +104,15 @@ namespace Gladiators
         public Player(double health, double damage, double armor, double dodge, int blockProcent, int blockPenetration)
         {
 
+        }
+        public string getSpecification()
+        {
+            return $"Вы - {className} у вас: \n\t {damage} DMG  \n\t {health} HP \n\t {armor} Брони \n\t {dodge}% уклониться";
+        }
+
+        public bool live()
+        {
+            return (health<=0) ? false: true;
         }
 
     }
