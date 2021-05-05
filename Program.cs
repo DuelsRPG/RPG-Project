@@ -9,9 +9,10 @@ namespace Gladiators
         List <ClassOfCharaster>  classOfCharastersList;  //Список классов для персонажа
         List<Wepon>             weponsList;             //Список оружия  для персонажа
         List<Equipment>         equipmentsList;         //Список брони   для персонажа
+        List<Enemy>            enemyList;              //Список противников
 
         Player player;
-        Player enemy1;
+        Enemy enemy;
         public static void Main(string[] args)
         {
             Program game = new Program();
@@ -33,6 +34,7 @@ namespace Gladiators
             {
                 Console.Clear();
                 menu();
+                
             }
             
         }
@@ -42,7 +44,7 @@ namespace Gladiators
         void initGame()
         {
             player = new Player();
-            enemy1 = new Player(50, 15, 2, 5, 20, 15);
+            enemy = new Enemy();
             
 
             classOfCharastersList = new List<ClassOfCharaster>()
@@ -51,6 +53,11 @@ namespace Gladiators
                 new ClassOfCharaster("Воин".PadRight(10),60,20, 10, 20, 10),
                 new ClassOfCharaster("Разбойник".PadRight(10),80,10, 15, 10, 15),
                 new ClassOfCharaster("Танк".PadRight(10),100,7, 0, 35, 25)
+            };
+            enemyList = new List<Enemy>()
+            {
+                //Имя противника, здоровье, урон, броня, уклонение, шанс блока, шанс пробить броню, коэф. действия
+                new Enemy("Дункан Холь", 60,20, 10, 20, 10, 10, 30)
             };
             weponsList = new List<Wepon>()
             {
@@ -112,8 +119,48 @@ namespace Gladiators
         //Функция в которой происходит бой
         void fight()
         {
+            int num1 = 0;
+            enemy = enemyList[num1];
             Console.WriteLine("БОЙ НАЧИНАЕТСЯ!!!");
+            while (player.live() && enemy.live())
+            {
+                Console.WriteLine("Выбирите действие: ");
+                Console.WriteLine("1. \tАтака");
+                Console.WriteLine("2. \tЗащита");
+                Console.WriteLine($"У вас - {player.health} HP и {player.damage} DMG\tУ врага {enemy.health} HP и {enemy.damage} DMG");
+                string playerAction = Console.ReadLine();
+                enemy.ratioEnemyAction();
 
+                switch (playerAction)
+                {
+                    case "1":
+                        switch (enemy.ratioEnemyAction())
+                        {
+                            case true:
+                                enemy.kick(player);
+                                break;
+                            case false:
+                               
+                                enemy.block(enemy, player);
+                                break;
+                        }
+                        Console.WriteLine($"У вас - {player.health} HP и {player.damage} DMG\tУ врага {enemy.health} HP и {enemy.damage} DMG");
+                        break;
+                    case "2":
+                        player.blockProcent *= 2;
+                        switch (enemy.ratioEnemyAction())
+                        {
+                            case true:
+                                enemy.kick(player);
+                                break;
+                            case false:
+                                goto case true;
+                        }
+                        Console.WriteLine($"У вас - {player.health} HP и {player.damage} DMG\tУ врага {enemy.health} HP и {enemy.damage} DMG");
+                        break;
+                }
+            }
+            num1 += 1;
         }
         //Функция магазина
         void shop()
@@ -121,13 +168,30 @@ namespace Gladiators
 
         }
 
-        void heal()
+        void hospital()
         {
 
         }
         void menu()
         {
+            Console.WriteLine("1. Арена");
+            Console.WriteLine("2. Магазин");
+            Console.WriteLine("3. Лечебница");
 
+            int playerMenuChose = Convert.ToInt32(Console.ReadLine());
+
+            switch (playerMenuChose)
+            {
+                case 1:
+                    fight();
+                    break;
+                case 2:
+                    shop();
+                    break;
+                case 3:
+                    hospital();
+                    break;
+            }
         }
         /*
 
