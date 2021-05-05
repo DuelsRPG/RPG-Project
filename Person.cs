@@ -14,6 +14,7 @@ namespace Gladiators
         protected string name;
         protected int blockProcent;
         protected int blockPenetration;
+        protected int ratioAction;
 
         //Геттеры
         public double getDamage() { return damage; }
@@ -23,6 +24,7 @@ namespace Gladiators
         public string getName() { return name; }
         public int getBlockProcent() { return blockProcent; }
         public int getBlockPenetration() { return blockPenetration; }
+        public int getRatioAction() { return ratioAction; }
 
         //Сеттеры
         public void setDamage(double a) { damage = Math.Abs(a); }
@@ -32,13 +34,25 @@ namespace Gladiators
         public void setName(string a) { name = a; }
         public void setBlockProcent(int a) { blockProcent = a; }
         public void setBlockPenetration(int a) { blockPenetration = a; }
+        public void setRatioAction(int a ) { ratioAction = a; }
 
         //Что может наш класс
         public double kick(Specifications enemy)
         {
-            if (!block() || chanceBlockPenetration() || chanceDodge()) { enemy.health -= damage; return damage; } else return 0;
+            if (!chanceblock() || chanceBlockPenetration() || chanceDodge()) { enemy.health -= damage; return damage; } else return 0;
         }
-        public bool block()
+        public double block(Specifications enemy, Specifications player)
+        {
+            if (enemy.chanceblock()&& !player.chanceBlockPenetration())
+            {
+                return 0;
+            }
+            else
+            {
+                return player.kick(enemy);
+            }
+        }
+        public bool chanceblock()
         {
             Random r = new Random();
             int nowProcent = r.Next(1, 101);
@@ -57,6 +71,7 @@ namespace Gladiators
             int nowDodgePenetration = cbp.Next(1,101);
             return (blockPenetration > nowDodgePenetration) ? true : false;
         }
+        
     }
 
     class Player : Specifications
@@ -65,6 +80,7 @@ namespace Gladiators
         private Equipment           mainEquipment;
         private ClassOfCharaster    mainClass;
 
+        public string name;
         public string className;
         public double health;
         public double damage;
@@ -72,6 +88,8 @@ namespace Gladiators
         public double dodge;
         public int blockProcent;
         public int blockPenetration;
+        public int ratioAction;
+        
 
         public void initWepon(Wepon a) 
         { 
@@ -100,13 +118,50 @@ namespace Gladiators
     }
         public Player() { }
 
-        public Player(double health, double damage, double armor, double dodge, int blockProcent, int blockPenetration)
+        public Player(string name, double health, double damage, double armor, double dodge, int blockProcent, int blockPenetration, int ratioAction)
         {
 
         }
+        public string getSpecification()
+        {
+            return $"Вы - {className} у вас: \n\t {damage} DMG  \n\t {health} HP \n\t {armor} Брони \n\t {dodge}% уклониться";
+        }
 
-        public string 
+        public bool live()
+        {
+            return (health<=0) ? false: true;
+        }
+        
+    }
 
+    class Enemy : Specifications
+    {
+        public string name;
+        public string className;
+        public double health;
+        public double damage;
+        public double armor;
+        public double dodge;
+        public int blockProcent;
+        public int blockPenetration;
+        public int ratioAction;
+
+        public Enemy() { }
+        public Enemy(string name, double health, double damage, double armor, double dodge, int blockProcent, int blockPenetration, int ratioAction)
+        {
+
+        }
+        public bool ratioEnemyAction()
+        {
+            //true - атака false - защита
+            Random rea = new Random();
+            int nowEnemyAction = rea.Next(1, 101);
+            return (ratioAction > nowEnemyAction) ? true : false;
+        }
+        public bool live()
+        {
+            return (health <= 0) ? false : true;
+        }
     }
     
     class ClassOfCharaster
