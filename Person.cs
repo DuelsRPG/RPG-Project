@@ -105,6 +105,8 @@ namespace Gladiators
 
         }
 
+        public string 
+
     }
     
     class ClassOfCharaster
