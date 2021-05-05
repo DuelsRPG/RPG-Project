@@ -32,7 +32,7 @@ namespace Gladiators
 
             while (player.live())
             {
-                Console.Clear();
+                
                 menu();
                 
             }
@@ -119,6 +119,7 @@ namespace Gladiators
         //Функция в которой происходит бой
         void fight()
         {
+            Console.Clear();
             int num1 = 0;
             enemy = enemyList[num1];
             Console.WriteLine("БОЙ НАЧИНАЕТСЯ!!!");
@@ -127,7 +128,7 @@ namespace Gladiators
                 Console.WriteLine("Выбирите действие: ");
                 Console.WriteLine("1. \tАтака");
                 Console.WriteLine("2. \tЗащита");
-                Console.WriteLine($"У вас - {player.health} HP и {player.damage} DMG\tУ врага {enemy.health} HP и {enemy.damage} DMG");
+                Console.WriteLine($"У вас - {player.getHealth()} HP и {player.getDamage()} DMG\tУ врага {enemy.getHealth()} HP и {enemy.getDamage()} DMG");
                 string playerAction = Console.ReadLine();
                 enemy.ratioEnemyAction();
 
@@ -137,17 +138,42 @@ namespace Gladiators
                         switch (enemy.ratioEnemyAction())
                         {
                             case true:
+                                if (enemy.chanceblock() && player.chanceBlockPenetration())
+                                {
+                                    Console.WriteLine("Вы пробили блок противника.");
+                                }
+                                if (player.chanceblock() && enemy.chanceBlockPenetration())
+                                {
+                                    Console.WriteLine("Противник пробил ваш блок");
+                                }
+                                if (player.chanceDodge())
+                                {
+                                    Console.WriteLine("Вы увернлись от атаки противника.");
+                                }
+                                if (enemy.chanceDodge())
+                                {
+                                    Console.WriteLine("Противник увернулся от вашей атаки.");
+                                }
                                 enemy.kick(player);
+                                player.kick(enemy);
                                 break;
                             case false:
-                               
+                                enemy.setBlockProcent(enemy.getBlockProcent() * 2);
+                                if (enemy.chanceblock() && player.chanceBlockPenetration())
+                                {
+                                    Console.WriteLine("Вы пробили блок противника.");
+                                }
+                                if (enemy.chanceDodge())
+                                {
+                                    Console.WriteLine("Противник увернулся от вашей атаки.");
+                                }
                                 enemy.block(enemy, player);
                                 break;
                         }
-                        Console.WriteLine($"У вас - {player.health} HP и {player.damage} DMG\tУ врага {enemy.health} HP и {enemy.damage} DMG");
+                        
                         break;
                     case "2":
-                        player.blockProcent *= 2;
+                        player.setBlockProcent(player.getBlockProcent()*2);
                         switch (enemy.ratioEnemyAction())
                         {
                             case true:
@@ -156,10 +182,11 @@ namespace Gladiators
                             case false:
                                 goto case true;
                         }
-                        Console.WriteLine($"У вас - {player.health} HP и {player.damage} DMG\tУ врага {enemy.health} HP и {enemy.damage} DMG");
+                        
                         break;
                 }
             }
+            menu();
             num1 += 1;
         }
         //Функция магазина
@@ -174,6 +201,7 @@ namespace Gladiators
         }
         void menu()
         {
+            Console.Clear();
             Console.WriteLine("1. Арена");
             Console.WriteLine("2. Магазин");
             Console.WriteLine("3. Лечебница");

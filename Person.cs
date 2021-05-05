@@ -39,11 +39,11 @@ namespace Gladiators
         //Что может наш класс
         public double kick(Specifications enemy)
         {
-            if (!chanceblock() || chanceBlockPenetration() || chanceDodge()) { enemy.health -= damage; return damage; } else return 0;
+            if ((!chanceblock() || chanceBlockPenetration() )|| !chanceDodge()) { enemy.health -= damage; return damage; } else return 0;
         }
         public double block(Specifications enemy, Specifications player)
         {
-            if (enemy.chanceblock()&& !player.chanceBlockPenetration())
+            if (enemy.chanceblock() && !player.chanceBlockPenetration())
             {
                 return 0;
             }
@@ -71,7 +71,10 @@ namespace Gladiators
             int nowDodgePenetration = cbp.Next(1,101);
             return (blockPenetration > nowDodgePenetration) ? true : false;
         }
-        
+        public bool live()
+        {
+            return (health <= 0) ? false : true;
+        }
     }
 
     class Player : Specifications
@@ -80,14 +83,8 @@ namespace Gladiators
         private Equipment           mainEquipment;
         private ClassOfCharaster    mainClass;
 
-        public string name;
-        public string className;
-        public double health;
-        public double damage;
-        public double armor;
-        public double dodge;
-        public int blockProcent;
-        public int blockPenetration;
+        
+        public string className;        
         public int ratioAction;
         
 
@@ -118,9 +115,15 @@ namespace Gladiators
     }
         public Player() { }
 
-        public Player(string name, double health, double damage, double armor, double dodge, int blockProcent, int blockPenetration, int ratioAction)
+        public Player(string name, double health, double damage, double armor, double dodge, int blockProcent, int blockPenetration)
         {
-
+            this.name = name;
+            this.health = health;
+            this.damage = damage;
+            this.dodge = dodge;
+            this.blockProcent = blockProcent;
+            this.blockPenetration = blockPenetration;
+            
         }
         public string getSpecification()
         {
@@ -136,20 +139,21 @@ namespace Gladiators
 
     class Enemy : Specifications
     {
-        public string name;
+        
         public string className;
-        public double health;
-        public double damage;
-        public double armor;
-        public double dodge;
-        public int blockProcent;
-        public int blockPenetration;
+        
         public int ratioAction;
 
         public Enemy() { }
         public Enemy(string name, double health, double damage, double armor, double dodge, int blockProcent, int blockPenetration, int ratioAction)
         {
-
+            this.name = name;
+            this.health = health;
+            this.damage = damage;
+            this.dodge = dodge;
+            this.blockProcent = blockProcent;
+            this.blockPenetration = blockPenetration;
+            this.ratioAction = ratioAction;
         }
         public bool ratioEnemyAction()
         {
@@ -158,10 +162,7 @@ namespace Gladiators
             int nowEnemyAction = rea.Next(1, 101);
             return (ratioAction > nowEnemyAction) ? true : false;
         }
-        public bool live()
-        {
-            return (health <= 0) ? false : true;
-        }
+        
     }
     
     class ClassOfCharaster
