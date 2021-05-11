@@ -34,15 +34,15 @@ namespace Gladiators
         public void setName(string a) { name = a; }
         public void setBlockProcent(int a) { blockProcent = a; }
         public void setBlockPenetration(int a) { blockPenetration = a; }
-        public void setRatioAction(int a ) { ratioAction = a; }
+        public void setRatioAction(int a) { ratioAction = a; }
 
         //Что может наш класс
         public double kick(Specifications enemy)
         {
-            if ((!chanceblock() || chanceBlockPenetration() )|| !chanceDodge()) { enemy.health -= damage; return damage; } else return 0;
+            if ((!chanceblock() || chanceBlockPenetration()) || !chanceDodge()) { enemy.health -= damage; return damage; } else return 0;
         }
         public double block(Specifications enemy, Specifications player)
-        {
+        { 
             if (enemy.chanceblock() && !player.chanceBlockPenetration())
             {
                 return 0;
@@ -75,6 +75,7 @@ namespace Gladiators
         {
             return (health <= 0) ? false : true;
         }
+
     }
 
     class Player : Specifications
@@ -128,6 +129,10 @@ namespace Gladiators
         public string getSpecification()
         {
             return $"Вы - {className} у вас: \n\t {damage} DMG  \n\t {health} HP \n\t {armor} Брони \n\t {dodge}% уклониться";
+        }
+        public string getSpecification(int a)
+        {
+            return $"|{className}|\t {damage}| \t |{health}|\t{armor}|\t|{dodge}|";
         }
 
         public bool live()

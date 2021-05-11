@@ -56,8 +56,9 @@ namespace Gladiators
             };
             enemyList = new List<Enemy>()
             {
-                //Имя противника, здоровье, урон, броня, уклонение, шанс блока, шанс пробить броню, коэф. действия
-                new Enemy("Дункан Холь", 60,20, 10, 20, 10, 10, 30)
+                //Имя противника, здоровье, урон, броня, уклонение, шанс блока, шанс прбить броню, коэф. действия
+                new Enemy("Дункан Холь", 60,20, 10, 20, 10, 10, 30),
+                new Enemy("Иван Коновалов", 100, 2000, 10, 20, 10, 10, 30)
             };
             weponsList = new List<Wepon>()
             {
@@ -119,56 +120,76 @@ namespace Gladiators
         //Функция в которой происходит бой
         void fight()
         {
+            /*
+             Рандомная генерация врага
+                    создаёшь список врагов и рандомно выбираешь из него врага
+                    Работаешь не с элементом списка, а с объектом в этой функции
+
+            Улитиматиную-супе-нипер-конструктивную функцию битвы
+                    Работать со всеми возможными врагами
+
+
+
+             */
+
             Console.Clear();
+            Enemy enemy = enemyList[new Random().Next(0, enemyList.Count)];
+
             int num1 = 0;
-            enemy = enemyList[num1];
             Console.WriteLine("БОЙ НАЧИНАЕТСЯ!!!");
             while (player.live() && enemy.live())
             {
                 Console.WriteLine("Выбирите действие: ");
                 Console.WriteLine("1. \tАтака");
                 Console.WriteLine("2. \tЗащита");
-                Console.WriteLine($"У вас - {player.getHealth()} HP и {player.getDamage()} DMG\tУ врага {enemy.getHealth()} HP и {enemy.getDamage()} DMG");
-                string playerAction = Console.ReadLine();
-                enemy.ratioEnemyAction();
-
-                switch (playerAction)
+                player.getSpecification();
+                //Console.WriteLine($"У вас - {player.getHealth()} HP и {player.getDamage()} DMG\tУ врага {enemy.getHealth()} HP и {enemy.getDamage()} DMG");
+                Console.WriteLine(player.getSpecification(1));
+                
+                switch ((string)Console.ReadLine())
                 {
                     case "1":
-                        switch (enemy.ratioEnemyAction())
+                        if (enemy.ratioEnemyAction())
                         {
-                            case true:
-                                if (enemy.chanceblock() && player.chanceBlockPenetration())
-                                {
-                                    Console.WriteLine("Вы пробили блок противника.");
-                                }
-                                if (player.chanceblock() && enemy.chanceBlockPenetration())
-                                {
-                                    Console.WriteLine("Противник пробил ваш блок");
-                                }
-                                if (player.chanceDodge())
-                                {
-                                    Console.WriteLine("Вы увернлись от атаки противника.");
-                                }
-                                if (enemy.chanceDodge())
-                                {
-                                    Console.WriteLine("Противник увернулся от вашей атаки.");
-                                }
-                                enemy.kick(player);
-                                player.kick(enemy);
-                                break;
-                            case false:
-                                enemy.setBlockProcent(enemy.getBlockProcent() * 2);
-                                if (enemy.chanceblock() && player.chanceBlockPenetration())
-                                {
-                                    Console.WriteLine("Вы пробили блок противника.");
-                                }
-                                if (enemy.chanceDodge())
-                                {
-                                    Console.WriteLine("Противник увернулся от вашей атаки.");
-                                }
-                                enemy.block(enemy, player);
-                                break;
+                            //Враг бъет
+                            #region temp
+                            /*
+                            if (enemy.chanceblock() && player.chanceBlockPenetration())
+                            {
+                                Console.WriteLine("Вы пробили блок противника.");
+                            }
+                            if (player.chanceblock() && enemy.chanceBlockPenetration())
+                            {
+                                Console.WriteLine("Противник пробил ваш блок");
+                            }
+                            if (player.chanceDodge())
+                            {
+                                Console.WriteLine("Вы увернлись от атаки противника.");
+                            }
+                            if (enemy.chanceDodge())
+                            {
+                                Console.WriteLine("Противник увернулся от вашей атаки.");
+                            }*/
+                            #endregion
+                            enemy.kick(player);
+                            player.kick(enemy);
+                        }
+                        else
+                        {
+                            //Враг зассал
+                            #region temp
+                            enemy.setBlockProcent(enemy.getBlockProcent() * 2);
+                            if (enemy.chanceblock() && player.chanceBlockPenetration())
+                            {
+                                Console.WriteLine("Вы пробили блок противника.");
+                            }
+                            if (enemy.chanceDodge())
+                            {
+                                Console.WriteLine("Противник увернулся от вашей атаки.");
+                            }
+                            #endregion
+                            enemy.block(enemy, player);
+                        
                         }
                         
                         break;
