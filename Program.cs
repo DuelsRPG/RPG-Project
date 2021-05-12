@@ -81,7 +81,7 @@ namespace Gladiators
         //В этой функции мы к классу Player даём Оружие, Снаряжение и Класс
         void chooseCharaster()
         {
-            Console.WriteLine("Здравствуйте, введите своё имя: "); player.setName(Console.ReadLine());
+            Console.WriteLine("Здравствуйте, введите своё имя: "); player.setName(Console.ReadLine());Console.Clear();
             Console.WriteLine($"Привет, {player.getName()}, в этой игре вы сможете ощутить роль гладиатора. ");
 
             int num = 1;
@@ -90,7 +90,7 @@ namespace Gladiators
                 Console.WriteLine($"{num})\t{classOfCharaster.getName()}-\tHP = {classOfCharaster.getHealth()};\tDMG = {classOfCharaster.getDamage()}.");
                 num++;
             }
-            player.initClassOfChataster(classOfCharastersList[Convert.ToInt32(Console.ReadLine()) - 1]);
+            player.initClassOfChataster(classOfCharastersList[Convert.ToInt32(Console.ReadLine()) - 1]); Console.Clear();
 
             num = 1;
             Console.WriteLine("Выберите начальное оружие: ");
@@ -99,7 +99,7 @@ namespace Gladiators
                 Console.WriteLine($"{num})\t{wepon.getName()} -\tDMG = {wepon.getDamage()};\t CLASS = {wepon.getClassOfCharaster().getName()}.");
                 num++;
             }
-            player.initWepon(weponsList[Convert.ToInt32(Console.ReadLine()) - 1]);
+            player.initWepon(weponsList[Convert.ToInt32(Console.ReadLine()) - 1]); Console.Clear();
 
             num = 1;
             Console.WriteLine("Выберите начальный доспех: ");
@@ -108,7 +108,7 @@ namespace Gladiators
                 Console.WriteLine($"{num})\t{equipment.getName()} -\tHP = {equipment.getHealth()};\t ARMOR = {equipment.getArmor()};\tDODGE = { equipment.getDodge()}%\t CLASS = {equipment.getClassOfCharaster().getName()}.");
                 num++;
             }
-            player.initEquipment(equipmentsList[Convert.ToInt32(Console.ReadLine()) - 1]);
+            player.initEquipment(equipmentsList[Convert.ToInt32(Console.ReadLine()) - 1]); Console.Clear();
         }
 
         //Функция выводит на экран характеристики игрока
