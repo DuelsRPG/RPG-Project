@@ -15,9 +15,11 @@ namespace Gladiators
         protected int blockProcent;
         protected int blockPenetration;
         protected int ratioAction;
+        protected double coin;// монеты которые будет получатьигрок за победу 
 
         //Геттеры
         public double getDamage() { return damage; }
+        public double getCoin() { return coin; }//<-
         public double getDodge() { return dodge; }
         public double getHealth() { return health; }
         public double getArmor() { return armor; }
@@ -31,6 +33,7 @@ namespace Gladiators
         public void setDodge(double a) { dodge = Math.Abs(a); }
         public void setHealth(double a) { health = a; }
         public void setArmor(double a) { armor = a; }
+        public void setCoin(double a) { coin=0; }//<-- 
         public void setName(string a) { name = a; }
         public void setBlockProcent(int a) { blockProcent = a; }
         public void setBlockPenetration(int a) { blockPenetration = a; }

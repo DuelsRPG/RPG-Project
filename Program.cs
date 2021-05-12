@@ -54,12 +54,17 @@ namespace Gladiators
                 new ClassOfCharaster("Разбойник".PadRight(10),80,10, 15, 10, 15),
                 new ClassOfCharaster("Танк".PadRight(10),100,7, 0, 35, 25)
             };
+
             enemyList = new List<Enemy>()
             {
                 //Имя противника, здоровье, урон, броня, уклонение, шанс блока, шанс прбить броню, коэф. действия
-                new Enemy("Дункан Холь", 60,20, 10, 20, 10, 10, 30),
-                new Enemy("Иван Коновалов", 100, 2000, 10, 20, 10, 10, 30)
+                new Enemy("Дункан Холь", 60, 20, 10, 20, 10, 10, 30),
+                new Enemy("Иван Коновалов", 100, 2000, 10, 20, 10, 10, 30),
+                new Enemy("Осаченко", 10000, 2000, 10, 2, 16, 10, 50),
+                new Enemy("Левый", 50, 15, 5, 25, 5, 3, 30),
+                new Enemy("Зерккальный", player.getHealth(), player.getDamage(), player.getArmor(),player.getBlockProcent(), 10, 10, 30)
             };
+
             weponsList = new List<Wepon>()
             {
                 //(Наименование, отступ, урон, принадлежность к классу)
@@ -67,6 +72,7 @@ namespace Gladiators
                 new Wepon("Клинок ярости".PadRight(17),8,classOfCharastersList[1]),
                 new Wepon("Молот света".PadRight(17),3,classOfCharastersList[2])
             };
+
             equipmentsList = new List<Equipment>()
             {
                 //(Наименование, отступ, здоровье, броня, уклонение, принадлежность к классу)
@@ -137,6 +143,7 @@ namespace Gladiators
 
             int num1 = 0;
             Console.WriteLine("БОЙ НАЧИНАЕТСЯ!!!");
+            Console.WriteLine($"Ваш противник: {enemy.getName()}");
             while (player.live() && enemy.live())
             {
                 Console.WriteLine("Выбирите действие: ");
@@ -213,12 +220,18 @@ namespace Gladiators
         //Функция магазина
         void shop()
         {
-
+            Console.WriteLine("Приходи поже, сейчас онет предметов");
+            Console.ReadLine();
         }
 
         void hospital()
         {
+            Console.WriteLine("Ваше здровье было востановленно на 20 поинтов");
+            player.setHealth(player.getHealth() + 20);
+         //   if (player.getCoin() > 2) {
+         //   player.setCoin(player.getCoin() - 2);
 
+         //   } // для этого нужно реализовать победу над врагом 
         }
         void menu()
         {
