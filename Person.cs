@@ -15,7 +15,7 @@ namespace Gladiators
         protected int blockProcent;
         protected int blockPenetration;
         protected int ratioAction;
-        protected double coin;// монеты которые будет получатьигрок за победу 
+        protected double coin;// монеты которые будет получать игрок за победу 
 
         //Геттеры
         public double getDamage() { return damage; }
@@ -61,7 +61,6 @@ namespace Gladiators
             int nowProcent = r.Next(1, 101);
             return (blockProcent > nowProcent) ? true : false;
         }
-
         public bool chanceDodge()
         {
             Random d = new Random();
@@ -78,7 +77,10 @@ namespace Gladiators
         {
             return (health <= 0) ? false : true;
         }
-
+        //Вычитает монеты из кошелька. Если всё впорядке вернёт 0 (false)
+        public int minusCoin(double a) { coin -= a; return (coin >= 0) ? 0 : 1; }
+        //Добавляет монеты в кошелёк. 
+        public void plusCoin(double a){ coin += a; }
     }
 
     class Player : Specifications
@@ -118,7 +120,6 @@ namespace Gladiators
            blockProcent = a.getBlockProcent();
     }
         public Player() { }
-
         public Player(string name, double health, double damage, double armor, double dodge, int blockProcent, int blockPenetration)
         {
             this.name = name;
@@ -152,7 +153,18 @@ namespace Gladiators
         
         public int ratioAction;
 
-        public Enemy() { }
+        public Enemy() { } 
+        public Enemy(Enemy en) {
+            //new Enemy("Левый", 50, 15, 5, 25, 5, 3, 30)
+            this.name = en.getName();
+            this.health = en.getHealth();
+            this.damage = en.getDamage();
+            this.dodge = en.getDodge();
+            this.blockProcent = en.getBlockProcent();
+            this.blockPenetration = en.getBlockPenetration();
+            this.ratioAction = en.getRatioAction();
+
+        }
         public Enemy(string name, double health, double damage, double armor, double dodge, int blockProcent, int blockPenetration, int ratioAction)
         {
             this.name = name;

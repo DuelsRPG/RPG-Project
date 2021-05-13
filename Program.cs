@@ -6,13 +6,14 @@ namespace Gladiators
 {
     class Program
     {
-        List <ClassOfCharaster>  classOfCharastersList;  //Список классов для персонажа
-        List<Wepon>             weponsList;             //Список оружия  для персонажа
-        List<Equipment>         equipmentsList;         //Список брони   для персонажа
-        List<Enemy>            enemyList;              //Список противников
+        List <ClassOfCharaster>     classOfCharastersList;  //Список классов для персонажа
+        List<Wepon>                 weponsList;             //Список оружия  для персонажа
+        List<Equipment>             equipmentsList;         //Список брони   для персонажа
+        List<Enemy>                 enemyList;              //Список противников
 
         Player player;
         Enemy enemy;
+        
         public static void Main(string[] args)
         {
             Program game = new Program();
@@ -26,9 +27,6 @@ namespace Gladiators
 
             //Выбор персонажа
             chooseCharaster();
-
-            //Показ характеристик игрока
-            printStatus();
 
             while (player.live())
             {
@@ -131,7 +129,7 @@ namespace Gladiators
                     создаёшь список врагов и рандомно выбираешь из него врага
                     Работаешь не с элементом списка, а с объектом в этой функции
 
-            Улитиматиную-супе-нипер-конструктивную функцию битвы
+            Улитиматиную-супе-гипер-конструктивную функцию битвы
                     Работать со всеми возможными врагами
 
 
@@ -139,7 +137,7 @@ namespace Gladiators
              */
 
             Console.Clear();
-            Enemy enemy = enemyList[new Random().Next(0, enemyList.Count)];
+            Enemy enemy = new Enemy(enemyList[new Random().Next(0, enemyList.Count)]);
 
             int num1 = 0;
             Console.WriteLine("БОЙ НАЧИНАЕТСЯ!!!");
@@ -228,10 +226,10 @@ namespace Gladiators
         {
             Console.WriteLine("Ваше здровье было востановленно на 20 поинтов");
             player.setHealth(player.getHealth() + 20);
-         //   if (player.getCoin() > 2) {
-         //   player.setCoin(player.getCoin() - 2);
+            if (player.getCoin() > 2) {
+            player.setCoin(player.getCoin() - 2);
 
-         //   } // для этого нужно реализовать победу над врагом 
+            } // для этого нужно реализовать победу над врагом 
         }
         void menu()
         {
