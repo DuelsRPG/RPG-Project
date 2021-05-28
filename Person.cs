@@ -19,7 +19,7 @@ namespace Gladiators
 
         //Геттеры
         public double getDamage() { return damage; }
-        public double getCoin() { return coin; }//<-
+        public double getCoin() { return coin; }//          <-
         public double getDodge() { return dodge; }
         public double getHealth() { return health; }
         public double getArmor() { return armor; }

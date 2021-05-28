@@ -147,8 +147,8 @@ namespace Gladiators
                 Console.WriteLine("Выбирите действие: ");
                 Console.WriteLine("1. \tАтака");
                 Console.WriteLine("2. \tЗащита");
-                player.getSpecification();
-                //Console.WriteLine($"У вас - {player.getHealth()} HP и {player.getDamage()} DMG\tУ врага {enemy.getHealth()} HP и {enemy.getDamage()} DMG");
+                //player.getSpecification();
+                Console.WriteLine($"У вас - {player.getHealth()} HP и {player.getDamage()} DMG\tУ врага {enemy.getHealth()} HP и {enemy.getDamage()} DMG");
                 Console.WriteLine(player.getSpecification(1));
                 
                 switch ((string)Console.ReadLine())
@@ -218,18 +218,27 @@ namespace Gladiators
         //Функция магазина
         void shop()
         {
+            Console.Clear();
             Console.WriteLine("Приходи поже, сейчас онет предметов");
             Console.ReadLine();
         }
 
         void hospital()
         {
+            Console.Clear();
             Console.WriteLine("Ваше здровье было востановленно на 20 поинтов");
+            Console.ReadLine();
             player.setHealth(player.getHealth() + 20);
-            if (player.getCoin() > 2) {
-            player.setCoin(player.getCoin() - 2);
+            if (player.getCoin() > 2)
+            {
+                player.setCoin(player.getCoin() - 2);
 
-            } // для этого нужно реализовать победу над врагом 
+            }
+            else 
+            {
+                Console.WriteLine("ПОШЁЛ ВОН, НИЩЕБРОД!!!");
+                Console.ReadLine();
+            }// для этого нужно реализовать победу над врагом 
         }
         void menu()
         {
